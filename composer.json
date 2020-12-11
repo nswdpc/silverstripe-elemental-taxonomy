@@ -1,0 +1,32 @@
+{
+    "name": "nswdpc/silverstripe-elemental-taxonomy",
+    "description": "Elemental Taxonomy module, provides a list of taxonomy terms under a selected type",
+    "type": "silverstripe-vendormodule",
+    "keywords": [
+        "silverstripe",
+        "nsw",
+        "taxonomy",
+        "list",
+        "elemental"
+    ],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Mark Taylor",
+            "homepage": "https://dpc.nsw.gov.au",
+            "role": "Bon Vivant"
+        },
+        {
+            "name": "James Ellis",
+            "homepage": "https://dpc.nsw.gov.au",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "nswdpc/silverstripe-taxonomy-icons": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7 | ^7",
+        "squizlabs/php_codesniffer": "^3.0"
+    }
+}

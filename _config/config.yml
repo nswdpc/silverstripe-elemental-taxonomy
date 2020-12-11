@@ -1,0 +1,6 @@
+---
+Name: nswdpc-elemental-taxonomy
+---
+SilverStripe\Taxonomy\TaxonomyTerm:
+  extensions:
+    - 'NSWDPC\Taxonomy\TaxonomyDescriptionExtension'
