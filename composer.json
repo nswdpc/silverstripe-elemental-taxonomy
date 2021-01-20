@@ -23,7 +23,7 @@
         }
     ],
     "require": {
-        "nswdpc/silverstripe-taxonomy-icons": "dev-master"
+        "nswdpc/silverstripe-taxonomy-icons": "^0.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7 | ^7",
