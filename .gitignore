@@ -1,4 +1,2 @@
-/client/node_modules
-/vendor/
 .DS_Store
-/.php-cs-cache
+/.php_cs.cache
