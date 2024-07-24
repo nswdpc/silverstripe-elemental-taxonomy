@@ -1,3 +1,3 @@
-<% if $ShowTitle %>
-    <h2>$Title</h2>
+<% if $ShowTitle && $Title %>
+    <h2>{$Title}</h2>
 <% end_if %>

@@ -12,6 +12,8 @@ Provides a content element for the CMS where a Content Author can select a Taxon
 + Choose to only show certain terms in the selected type
 + Optionally display the taxonomy type
 
+Projects should override the templates provided and extend as required, e.g. to link or search based on a taxonomy term from within the list.
+
 ## Requirements
 
 See [composer.json](./composer.json)
@@ -37,6 +39,10 @@ See [config.yml](./_config/config.yml) for module configuration values
 ## Maintainers
 
 + [dpcdigital@NSWDPC:~$](https://dpc.nsw.gov.au)
+
+## Security
+
+If you have found a security issue with this module, please email digital[@]dpc.nsw.gov.au in the first instance, detailing your findings.
 
 ## Bugtracker
 
