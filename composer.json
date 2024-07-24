@@ -21,8 +21,8 @@
         }
     ],
     "require": {
-        "nswdpc/silverstripe-taxonomy-icons": "^0.2",
-        "dnadesign/silverstripe-elemental": "^4.9.0"
+        "nswdpc/silverstripe-taxonomy-icons": "^1",
+        "dnadesign/silverstripe-elemental": "^5"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
