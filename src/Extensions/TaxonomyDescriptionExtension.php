@@ -1,6 +1,6 @@
 <?php
 
-namespace NSWDPC\Taxonomy;
+namespace NSWDPC\Elemental\Extensions\Taxonomy;
 
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextareaField;
@@ -14,10 +14,16 @@ use SilverStripe\Taxonomy\TaxonomyTerm;
  */
 class TaxonomyDescriptionExtension extends DataExtension {
 
+    /**
+     * @inheritdoc
+     */
     private static $db = [
         'Description' => 'Text',
     ];
 
+    /**
+     * Return title with optional description suffixed
+     */
     public function TitleDescription() {
         $title = $this->owner->Title;
         if($this->owner->Description) {
@@ -26,6 +32,9 @@ class TaxonomyDescriptionExtension extends DataExtension {
         return $title;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function updateCMSFields(FieldList $fields)
     {
         $fields->addFieldToTab(

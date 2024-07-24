@@ -3,4 +3,4 @@ Name: nswdpc-elemental-taxonomy
 ---
 SilverStripe\Taxonomy\TaxonomyTerm:
   extensions:
-    - 'NSWDPC\Taxonomy\TaxonomyDescriptionExtension'
+    - 'NSWDPC\Elemental\Extensions\Taxonomy\TaxonomyDescriptionExtension'
