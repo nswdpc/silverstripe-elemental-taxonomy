@@ -2,14 +2,15 @@
 
 namespace NSWDPC\Elemental\Models\Taxonomy;
 
-use SilverStripe\Forms\CheckboxSetField;
 use DNADesign\Elemental\Models\BaseElement;
+use SilverStripe\Forms\CheckboxSetField;
 use SilverStripe\Forms\TextareaField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\OptionsetField;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\View\Requirements;
+use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Taxonomy\TaxonomyType;
 use SilverStripe\Taxonomy\TaxonomyTerm;
@@ -20,29 +21,50 @@ use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
 use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
 
 /**
- * ElementTaxonomyList class
+ * Content block used to list taxonomy terms linked to a selected TaxonomyType
  *
- * @author Mark Taylor <mark.taylor@dpc.nsw.gov.au>
- * @author James Ellis <mark.taylor@dpc.nsw.gov.au>
+ * @author Mark
+ * @author James
  */
 class ElementTaxonomyList extends BaseElement {
 
+    /**
+     * @inheritdoc
+     */
     private static $table_name = 'ElementTaxonomyList';
 
+    /**
+     * @inheritdoc
+     */
     private static $icon = 'font-icon-tags';
 
-    // Due to LinkField inclusion
+    /**
+     * @inheritdoc
+     */
     private static $inline_editable = true;
 
+    /**
+     * @inheritdoc
+     */
     private static $singular_name = 'Taxonomy list';
+
+    /**
+     * @inheritdoc
+     */
     private static $plural_name = 'Taxonomy lists';
 
+    /**
+     * @inheritdoc
+     */
     private static $db = [
         'TermsSort' => 'Varchar(8)',
         'ShowTypeName' => 'Boolean',
         'UseAllTerms' => 'Boolean',
     ];
 
+    /**
+     * @inheritdoc
+     */
     private static $has_one = [
         'TaxonomyType' => TaxonomyType::class,
     ];
@@ -55,17 +77,36 @@ class ElementTaxonomyList extends BaseElement {
         'Terms' => TaxonomyTerm::class,
     ];
 
+    /**
+     * @inheritdoc
+     */
     private static $defaults = [
         'UseAllTerms' => 1 // use all terms in the type
     ];
 
+    /**
+     * @inheritdoc
+     */
     private static $title = 'Taxonomy list';
+
+    /**
+     * @inheritdoc
+     */
     private static $description = 'Display a list of terms under a Taxonomy Type';
 
-
+    /**
+     * @var string
+     */
     const TERMS_SORT_NAME = 'Name';
+
+    /**
+     * @var string
+     */
     const TERMS_SORT_POSITION = 'Sort';//TaxonomyTerm.Sort
 
+    /**
+     * @inheritdoc
+     */
     public function getType()
     {
         return _t(__CLASS__ . '.BlockType', 'Editable taxonomy term list');
@@ -79,6 +120,9 @@ class ElementTaxonomyList extends BaseElement {
         return parent::forTemplate($holder);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getCMSFields() {
         $fields = parent::getCMSFields();
         $fields->addFieldsToTab(
@@ -127,6 +171,9 @@ class ElementTaxonomyList extends BaseElement {
         return $fields;
     }
 
+    /**
+     * Part of schema.org support
+     */
     public function DefinedTermSet() {
         return $this->getAnchor() . "-definedtermset";
     }
@@ -152,7 +199,7 @@ class ElementTaxonomyList extends BaseElement {
      * Get selected/sorted terms
      * @returns DataList|null
      */
-    public function getSelectedTerms() {
+    public function getSelectedTerms() : ?DataList {
         $type = $this->TaxonomyType();
         $terms = null;
         if($type) {
