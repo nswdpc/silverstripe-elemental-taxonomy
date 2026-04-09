@@ -113,15 +113,6 @@ class ElementTaxonomyList extends BaseElement
     }
 
     /**
-     * Apply requirements when templating
-     */
-    #[\Override]
-    public function forTemplate($holder = true)
-    {
-        return parent::forTemplate($holder);
-    }
-
-    /**
      * @inheritdoc
      */
     #[\Override]
