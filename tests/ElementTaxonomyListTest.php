@@ -49,7 +49,7 @@ class ElementTaxonomyListTest extends SapphireTest
         $element->write();
         $element->Terms()->add($child1);
         $element->Terms()->add($child2);
-        $termsCount = $element->Terms()->count();
+        $element->Terms()->count();
         $element->publishSingle();
 
         $selectedTerms = $element->getSelectedTerms();
