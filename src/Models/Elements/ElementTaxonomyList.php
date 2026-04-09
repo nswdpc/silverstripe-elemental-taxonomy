@@ -25,38 +25,44 @@ use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
  *
  * @author Mark
  * @author James
+ * @property ?string $TermsSort
+ * @property bool $ShowTypeName
+ * @property bool $UseAllTerms
+ * @property int $TaxonomyTypeID
+ * @method \SilverStripe\Taxonomy\TaxonomyType TaxonomyType()
+ * @method \SilverStripe\ORM\ManyManyList<\SilverStripe\Taxonomy\TaxonomyTerm> Terms()
  */
 class ElementTaxonomyList extends BaseElement {
 
     /**
      * @inheritdoc
      */
-    private static $table_name = 'ElementTaxonomyList';
+    private static string $table_name = 'ElementTaxonomyList';
 
     /**
      * @inheritdoc
      */
-    private static $icon = 'font-icon-tags';
+    private static string $icon = 'font-icon-tags';
 
     /**
      * @inheritdoc
      */
-    private static $inline_editable = true;
+    private static bool $inline_editable = true;
 
     /**
      * @inheritdoc
      */
-    private static $singular_name = 'Taxonomy list';
+    private static string $singular_name = 'Taxonomy list';
 
     /**
      * @inheritdoc
      */
-    private static $plural_name = 'Taxonomy lists';
+    private static string $plural_name = 'Taxonomy lists';
 
     /**
      * @inheritdoc
      */
-    private static $db = [
+    private static array $db = [
         'TermsSort' => 'Varchar(8)',
         'ShowTypeName' => 'Boolean',
         'UseAllTerms' => 'Boolean',
@@ -65,34 +71,33 @@ class ElementTaxonomyList extends BaseElement {
     /**
      * @inheritdoc
      */
-    private static $has_one = [
+    private static array $has_one = [
         'TaxonomyType' => TaxonomyType::class,
     ];
 
     /**
      * Many_many relationship
-     * @var array
      */
-    private static $many_many = [
+    private static array $many_many = [
         'Terms' => TaxonomyTerm::class,
     ];
 
     /**
      * @inheritdoc
      */
-    private static $defaults = [
+    private static array $defaults = [
         'UseAllTerms' => 1 // use all terms in the type
     ];
 
     /**
      * @inheritdoc
      */
-    private static $title = 'Taxonomy list';
+    private static string $title = 'Taxonomy list';
 
     /**
      * @inheritdoc
      */
-    private static $description = 'Display a list of terms under a Taxonomy Type';
+    private static string $description = 'Display a list of terms under a Taxonomy Type';
 
     /**
      * @var string
@@ -107,14 +112,16 @@ class ElementTaxonomyList extends BaseElement {
     /**
      * @inheritdoc
      */
+    #[\Override]
     public function getType()
     {
-        return _t(__CLASS__ . '.BlockType', 'Editable taxonomy term list');
+        return _t(self::class . '.BlockType', 'Editable taxonomy term list');
     }
 
     /**
      * Apply requirements when templating
      */
+    #[\Override]
     public function forTemplate($holder = true)
     {
         return parent::forTemplate($holder);
@@ -123,26 +130,27 @@ class ElementTaxonomyList extends BaseElement {
     /**
      * @inheritdoc
      */
+    #[\Override]
     public function getCMSFields() {
         $fields = parent::getCMSFields();
         $fields->addFieldsToTab(
             'Root.Main', [
                 DropdownField::create(
                     'TaxonomyTypeID',
-                    _t(__CLASS__ . '.TAXONOMY_TYPE', 'Select a taxonomy type'),
+                    _t(self::class . '.TAXONOMY_TYPE', 'Select a taxonomy type'),
                     TaxonomyType::get()->sort('Name ASC')->map("ID","Name")
                 )->setEmptyString(''),
                 CheckboxField::create(
                     'UseAllTerms',
-                    _t(__CLASS__ . '.SHOW_TYPE_NAME', 'Display all terms in this taxonomy type (overrides term selection)')
+                    _t(self::class . '.SHOW_TYPE_NAME', 'Display all terms in this taxonomy type (overrides term selection)')
                 ),
                 CheckboxField::create(
                     'ShowTypeName',
-                    _t(__CLASS__ . '.SHOW_TYPE_NAME', 'Display the taxonomy type name')
+                    _t(self::class . '.SHOW_TYPE_NAME', 'Display the taxonomy type name')
                 ),
                 OptionsetField::create(
                     'TermsSort',
-                    _t(__CLASS__ . '.TERMS_SORT', 'Select a terms sort order'),
+                    _t(self::class . '.TERMS_SORT', 'Select a terms sort order'),
                     [ self::TERMS_SORT_NAME => 'Name', self::TERMS_SORT_POSITION => 'Position' ],
                     'Name'
                 )
@@ -160,7 +168,7 @@ class ElementTaxonomyList extends BaseElement {
                     'Root.Main',
                     CheckboxSetField::create(
                         'Terms',
-                        _t(__CLASS__ . '.TERMS_SELECTION', 'Check terms to display (applied if \'Display all terms\' is unchecked)'),
+                        _t(self::class . '.TERMS_SELECTION', "Check terms to display (applied if 'Display all terms' is unchecked)"),
                         $list->map("ID","TitleDescription")
                     )
                 );
@@ -168,19 +176,21 @@ class ElementTaxonomyList extends BaseElement {
         } else {
             $fields->removeByName('Terms');
         }
+
         return $fields;
     }
 
     /**
      * Part of schema.org support
      */
-    public function DefinedTermSet() {
+    public function DefinedTermSet(): string {
         return $this->getAnchor() . "-definedtermset";
     }
 
     /**
      * Event handler called after writing to the database.
      */
+    #[\Override]
     public function onAfterWrite()
     {
         parent::onAfterWrite();
@@ -208,6 +218,7 @@ class ElementTaxonomyList extends BaseElement {
                 // ensure a sane sort
                 $sort = self::TERMS_SORT_NAME;
             }
+
             // get all terms, sorted
             $terms = TaxonomyTerm::get()->filter([
                         'TypeID' => $type->ID
@@ -224,6 +235,7 @@ class ElementTaxonomyList extends BaseElement {
                 }
             }
         }
+
         return $terms;
     }
 

@@ -11,13 +11,15 @@ use SilverStripe\Taxonomy\TaxonomyTerm;
 /**
  * Decorate {@link SilverStripe\Taxonomy\TaxonomyTerm} with Textarea to provide a description of the term
  * @author James
+ * @property ?string $Description
+ * @extends \SilverStripe\ORM\DataExtension<(\SilverStripe\Taxonomy\TaxonomyTerm & static)>
  */
 class TaxonomyDescriptionExtension extends DataExtension {
 
     /**
      * @inheritdoc
      */
-    private static $db = [
+    private static array $db = [
         'Description' => 'Text',
     ];
 
@@ -25,10 +27,11 @@ class TaxonomyDescriptionExtension extends DataExtension {
      * Return title with optional description suffixed
      */
     public function TitleDescription() {
-        $title = $this->owner->Title;
-        if($this->owner->Description) {
-            $title .= " - " . $this->owner->Description;
+        $title = $this->getOwner()->Title;
+        if($this->getOwner()->Description) {
+            $title .= " - " . $this->getOwner()->Description;
         }
+
         return $title;
     }
 
@@ -42,7 +45,7 @@ class TaxonomyDescriptionExtension extends DataExtension {
             TextField::create(
                 'Description',
                 _t(
-                    __CLASS__ . ".TAXONOMY_DESCRIPTON",
+                    self::class . ".TAXONOMY_DESCRIPTON",
                     'A short description of the term'
                 )
             )
