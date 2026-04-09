@@ -4,8 +4,6 @@ namespace NSWDPC\Elemental\Models\Taxonomy;
 
 use DNADesign\Elemental\Models\BaseElement;
 use SilverStripe\Forms\CheckboxSetField;
-use SilverStripe\Forms\TextareaField;
-use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\OptionsetField;
 use SilverStripe\Forms\CheckboxField;
@@ -15,10 +13,6 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\Taxonomy\TaxonomyType;
 use SilverStripe\Taxonomy\TaxonomyTerm;
 use SilverStripe\Versioned\Versioned;
-use SilverStripe\Forms\GridField\GridField;
-use SilverStripe\Forms\GridField\GridFieldAddNewButton;
-use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
-use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
 
 /**
  * Content block used to list taxonomy terms linked to a selected TaxonomyType
@@ -32,8 +26,8 @@ use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
  * @method \SilverStripe\Taxonomy\TaxonomyType TaxonomyType()
  * @method \SilverStripe\ORM\ManyManyList<\SilverStripe\Taxonomy\TaxonomyTerm> Terms()
  */
-class ElementTaxonomyList extends BaseElement {
-
+class ElementTaxonomyList extends BaseElement
+{
     /**
      * @inheritdoc
      */
@@ -102,12 +96,12 @@ class ElementTaxonomyList extends BaseElement {
     /**
      * @var string
      */
-    const TERMS_SORT_NAME = 'Name';
+    public const TERMS_SORT_NAME = 'Name';
 
     /**
      * @var string
      */
-    const TERMS_SORT_POSITION = 'Sort';//TaxonomyTerm.Sort
+    public const TERMS_SORT_POSITION = 'Sort';//TaxonomyTerm.Sort
 
     /**
      * @inheritdoc
@@ -131,14 +125,16 @@ class ElementTaxonomyList extends BaseElement {
      * @inheritdoc
      */
     #[\Override]
-    public function getCMSFields() {
+    public function getCMSFields()
+    {
         $fields = parent::getCMSFields();
         $fields->addFieldsToTab(
-            'Root.Main', [
+            'Root.Main',
+            [
                 DropdownField::create(
                     'TaxonomyTypeID',
                     _t(self::class . '.TAXONOMY_TYPE', 'Select a taxonomy type'),
-                    TaxonomyType::get()->sort('Name ASC')->map("ID","Name")
+                    TaxonomyType::get()->sort('Name ASC')->map("ID", "Name")
                 )->setEmptyString(''),
                 CheckboxField::create(
                     'UseAllTerms',
@@ -169,7 +165,7 @@ class ElementTaxonomyList extends BaseElement {
                     CheckboxSetField::create(
                         'Terms',
                         _t(self::class . '.TERMS_SELECTION', "Check terms to display (applied if 'Display all terms' is unchecked)"),
-                        $list->map("ID","TitleDescription")
+                        $list->map("ID", "TitleDescription")
                     )
                 );
             }
@@ -183,7 +179,8 @@ class ElementTaxonomyList extends BaseElement {
     /**
      * Part of schema.org support
      */
-    public function DefinedTermSet(): string {
+    public function DefinedTermSet(): string
+    {
         return $this->getAnchor() . "-definedtermset";
     }
 
@@ -209,24 +206,25 @@ class ElementTaxonomyList extends BaseElement {
      * Get selected/sorted terms
      * @returns DataList|null
      */
-    public function getSelectedTerms() : ?DataList {
+    public function getSelectedTerms(): ?DataList
+    {
         $type = $this->TaxonomyType();
         $terms = null;
-        if($type) {
+        if ($type) {
             $sort = $this->TermsSort;
-            if($sort != self::TERMS_SORT_POSITION) {
+            if ($sort != self::TERMS_SORT_POSITION) {
                 // ensure a sane sort
                 $sort = self::TERMS_SORT_NAME;
             }
 
             // get all terms, sorted
             $terms = TaxonomyTerm::get()->filter([
-                        'TypeID' => $type->ID
-                    ])->sort($sort,"ASC");
+                'TypeID' => $type->ID
+            ])->sort($sort, "ASC");
             // filtered by selected Terms if set
             $selected_terms = $this->Terms()->column('ID');
             if (!$this->UseAllTerms) {
-                if(!empty($selected_terms)) {
+                if (!empty($selected_terms)) {
                     // use the selected terms
                     $terms = $terms->filter('ID', $selected_terms);
                 } else {

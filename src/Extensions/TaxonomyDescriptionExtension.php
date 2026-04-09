@@ -3,10 +3,8 @@
 namespace NSWDPC\Elemental\Extensions\Taxonomy;
 
 use SilverStripe\Forms\FieldList;
-use SilverStripe\Forms\TextareaField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\DataExtension;
-use SilverStripe\Taxonomy\TaxonomyTerm;
 
 /**
  * Decorate {@link SilverStripe\Taxonomy\TaxonomyTerm} with Textarea to provide a description of the term
@@ -14,8 +12,8 @@ use SilverStripe\Taxonomy\TaxonomyTerm;
  * @property ?string $Description
  * @extends \SilverStripe\ORM\DataExtension<(\SilverStripe\Taxonomy\TaxonomyTerm & static)>
  */
-class TaxonomyDescriptionExtension extends DataExtension {
-
+class TaxonomyDescriptionExtension extends DataExtension
+{
     /**
      * @inheritdoc
      */
@@ -26,9 +24,10 @@ class TaxonomyDescriptionExtension extends DataExtension {
     /**
      * Return title with optional description suffixed
      */
-    public function TitleDescription() {
+    public function TitleDescription()
+    {
         $title = $this->getOwner()->Title;
-        if($this->getOwner()->Description) {
+        if ($this->getOwner()->Description) {
             $title .= " - " . $this->getOwner()->Description;
         }
 
