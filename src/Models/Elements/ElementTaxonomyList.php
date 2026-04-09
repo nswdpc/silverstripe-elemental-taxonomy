@@ -147,7 +147,10 @@ class ElementTaxonomyList extends BaseElement
                 OptionsetField::create(
                     'TermsSort',
                     _t(self::class . '.TERMS_SORT', 'Select a terms sort order'),
-                    [ self::TERMS_SORT_NAME => 'Name', self::TERMS_SORT_POSITION => 'Position' ],
+                    [
+                        self::TERMS_SORT_NAME => 'Name',
+                        self::TERMS_SORT_POSITION => 'Position'
+                    ],
                     'Name'
                 )
             ]
@@ -158,13 +161,16 @@ class ElementTaxonomyList extends BaseElement
                 // no terms !
                 $fields->removeByName('Terms');
             } else {
-                $list = TaxonomyTerm::get()->filter('TypeID', $this->TaxonomyTypeID);
-                $list = $list->sort('Name ASC');
+                $list = TaxonomyTerm::get()->filter(['TypeID' => $this->TaxonomyTypeID]);
+                $list = $list->sort(['Name' => 'ASC']);
                 $fields->addFieldToTab(
                     'Root.Main',
                     CheckboxSetField::create(
                         'Terms',
-                        _t(self::class . '.TERMS_SELECTION', "Check terms to display (applied if 'Display all terms' is unchecked)"),
+                        _t(
+                            self::class . '.TERMS_SELECTION',
+                            "Check terms to display (applied if 'Display all terms' is unchecked)"
+                        ),
                         $list->map("ID", "TitleDescription")
                     )
                 );
@@ -193,7 +199,7 @@ class ElementTaxonomyList extends BaseElement
         parent::onAfterWrite();
         $stage = Versioned::get_stage();
         if ($stage == Versioned::DRAFT) {
-            // if the TYPE is no longer availble or changed, remove all selected terms
+            // if the TYPE is no longer available or changed, remove all selected terms from the relation
             $type = $this->TaxonomyType();
             $changed = $this->isChanged('TaxonomyTypeID', DataObject::CHANGE_VALUE);
             if ($changed || !$type || !$type->exists()) {
@@ -204,7 +210,6 @@ class ElementTaxonomyList extends BaseElement
 
     /**
      * Get selected/sorted terms
-     * @returns DataList|null
      */
     public function getSelectedTerms(): ?DataList
     {
@@ -220,13 +225,13 @@ class ElementTaxonomyList extends BaseElement
             // get all terms, sorted
             $terms = TaxonomyTerm::get()->filter([
                 'TypeID' => $type->ID
-            ])->sort($sort, "ASC");
+            ])->sort([$sort => "ASC"]);
             // filtered by selected Terms if set
-            $selected_terms = $this->Terms()->column('ID');
+            $selectedTerms = $this->Terms()->column('ID');
             if (!$this->UseAllTerms) {
-                if (!empty($selected_terms)) {
+                if ($selectedTerms !== []) {
                     // use the selected terms
-                    $terms = $terms->filter('ID', $selected_terms);
+                    $terms = $terms->filter('ID', $selectedTerms);
                 } else {
                     // no terms selected!
                     return null;
