@@ -91,7 +91,7 @@ class ElementTaxonomyList extends BaseElement
     /**
      * @inheritdoc
      */
-    private static string $description = 'Display a list of terms under a Taxonomy Type';
+    private static string $class_description = 'Display a list of terms under a Taxonomy Type';
 
     /**
      * @var string
