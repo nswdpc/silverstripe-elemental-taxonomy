@@ -1,0 +1,15 @@
+SilverStripe\Taxonomy\TaxonomyType:
+  haschildren:
+    Name: 'Type has children'
+  hasnochildren:
+    Name: 'Type has no children'
+SilverStripe\Taxonomy\TaxonomyTerm:
+  child1:
+    Name: 'Child 1'
+    Type: '=>SilverStripe\Taxonomy\TaxonomyType.haschildren'
+  child2:
+    Name: 'Child 2'
+    Type: '=>SilverStripe\Taxonomy\TaxonomyType.haschildren'
+  child3:
+    Name: 'Child 3'
+    Type: '=>SilverStripe\Taxonomy\TaxonomyType.haschildren'
