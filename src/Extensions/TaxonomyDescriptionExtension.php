@@ -4,15 +4,15 @@ namespace NSWDPC\Elemental\Extensions\Taxonomy;
 
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 
 /**
  * Decorate {@link SilverStripe\Taxonomy\TaxonomyTerm} with Textarea to provide a description of the term
  * @author James
  * @property ?string $Description
- * @extends \SilverStripe\ORM\DataExtension<(\SilverStripe\Taxonomy\TaxonomyTerm & static)>
+ * @extends \SilverStripe\Core\Extension<(\SilverStripe\Taxonomy\TaxonomyTerm & static)>
  */
-class TaxonomyDescriptionExtension extends DataExtension
+class TaxonomyDescriptionExtension extends Extension
 {
     /**
      * @inheritdoc

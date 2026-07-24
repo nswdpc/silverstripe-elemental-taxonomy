@@ -2,7 +2,7 @@
 <div class="content-element__content<% if $StyleVariant %> {$StyleVariant}<% end_if %>">
     <% include ElementTaxonomyTitle %>
     <div itemscope itemtype="https://schema.org/DefinedTermSet" id="{$DefinedTermSet}">
-        <% if $ShowTypename %>
+        <% if $ShowTypeName  && $TaxonomyType %>
             <h4 itemprop="name">{$TaxonomyType.Name}</h4>
         <% end_if %>
         <ol>

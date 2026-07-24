@@ -7,7 +7,6 @@ use SilverStripe\Forms\CheckboxSetField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\OptionsetField;
 use SilverStripe\Forms\CheckboxField;
-use SilverStripe\View\Requirements;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Taxonomy\TaxonomyType;
@@ -91,7 +90,7 @@ class ElementTaxonomyList extends BaseElement
     /**
      * @inheritdoc
      */
-    private static string $description = 'Display a list of terms under a Taxonomy Type';
+    private static string $class_description = 'Display a list of terms under a Taxonomy Type';
 
     /**
      * @var string
@@ -110,15 +109,6 @@ class ElementTaxonomyList extends BaseElement
     public function getType()
     {
         return _t(self::class . '.BlockType', 'Editable taxonomy term list');
-    }
-
-    /**
-     * Apply requirements when templating
-     */
-    #[\Override]
-    public function forTemplate($holder = true)
-    {
-        return parent::forTemplate($holder);
     }
 
     /**
