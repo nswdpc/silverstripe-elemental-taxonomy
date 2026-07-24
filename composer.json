@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "nswdpc/silverstripe-taxonomy-icons": "dev-ss6",
+        "nswdpc/silverstripe-taxonomy-icons": "^2",
         "dnadesign/silverstripe-elemental": "^6"
     },
     "require-dev": {
